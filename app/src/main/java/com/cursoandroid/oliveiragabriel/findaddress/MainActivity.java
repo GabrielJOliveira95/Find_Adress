@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 if (s != null){
 
-                    Toast.makeText(MainActivity.this, "\n" + "Search completed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Search completed", Toast.LENGTH_LONG).show();
                     JSONObject jsonObject = new JSONObject(s);
                     String street = jsonObject.getString("logradouro");
                     String neighborhood = jsonObject.getString("bairro");
