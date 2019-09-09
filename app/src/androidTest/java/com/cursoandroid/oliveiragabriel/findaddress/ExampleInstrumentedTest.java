@@ -1,4 +1,4 @@
-package com.cursoandroid.oliveiragabriel.findandress;
+package com.cursoandroid.oliveiragabriel.findaddress;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

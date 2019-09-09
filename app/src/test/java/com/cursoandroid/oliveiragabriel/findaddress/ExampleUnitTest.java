@@ -1,4 +1,4 @@
-package com.cursoandroid.oliveiragabriel.findandress;
+package com.cursoandroid.oliveiragabriel.findaddress;
 
 import org.junit.Test;
 

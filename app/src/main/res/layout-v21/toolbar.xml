@@ -7,7 +7,7 @@
     android:background="@color/colorPrimary"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     android:elevation="4dp"
-    app:title="Find Andress"
+    app:title="Find Address"
     
     >
 
