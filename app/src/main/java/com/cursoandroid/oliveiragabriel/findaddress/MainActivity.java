@@ -1,11 +1,13 @@
 package com.cursoandroid.oliveiragabriel.findaddress;
 
 import android.os.AsyncTask;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText cep_edit_text;
     private AppCompatButton btn_search;
     private TextView text_cep;
+    private ProgressBar progressBar2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +38,15 @@ public class MainActivity extends AppCompatActivity {
         cep_edit_text = findViewById(R.id.cep_edit_text);
         btn_search = findViewById(R.id.btn_search);
         text_cep = findViewById(R.id.text_cep);
+        progressBar2 = findViewById(R.id.progressBar2);
+        progressBar2.setVisibility(View.GONE);
 
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FindZipCode findZipCode = new FindZipCode();
+
                 String cep_string = cep_edit_text.getText().toString();
-                findZipCode.execute("https://viacep.com.br/ws/"+cep_string+"/json/");
+                validate(cep_string);
 
             }
         });
@@ -49,6 +55,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     class FindZipCode extends AsyncTask<String, Void, String>{
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar2.setVisibility(View.VISIBLE);
+
+        }
 
         @Override
         protected String doInBackground(String... strings) {
@@ -94,25 +107,34 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+
+           // text_cep.setText(s);
+
             try {
-                if (s != null){
-
-                    Toast.makeText(MainActivity.this, "Search completed", Toast.LENGTH_LONG).show();
-                    JSONObject jsonObject = new JSONObject(s);
-                    String street = jsonObject.getString("logradouro");
-                    String neighborhood = jsonObject.getString("bairro");
-                    String city = jsonObject.getString("localidade");
-                    String state = jsonObject.getString("uf");
-                    String complete_adress = street + " - " + neighborhood + ", " + city + " - " + state;
-                    text_cep.setText(complete_adress);
-
-
-                }
-
+                JSONObject jsonObject = new JSONObject(s);
+                String street = jsonObject.getString("logradouro");
+                String neighborhood = jsonObject.getString("bairro");
+                String city = jsonObject.getString("localidade");
+                String state = jsonObject.getString("uf");
+                s = street + " - " + neighborhood + ", " + city + " - " + state;
+                text_cep.setText(s);
+                progressBar2.setVisibility(View.GONE);
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void validate(String number){
+        if (number.isEmpty()){
+
+            cep_edit_text.setError("Insert a valid zip code");
+
+        }else {
+            FindZipCode findZipCode = new FindZipCode();
+            findZipCode.execute("https://viacep.com.br/ws/"+number+"/json/");
+
         }
     }
 
