@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Find Andress</string>
     <string name="buscar">BUSCAR</string>
+    <string name="linkedln">Linkedln</string>
+    <string name="about">About</string>
+    <string name="exit">Exit</string>
 </resources>

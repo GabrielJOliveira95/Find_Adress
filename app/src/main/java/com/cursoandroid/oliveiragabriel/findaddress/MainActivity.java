@@ -1,10 +1,14 @@
 package com.cursoandroid.oliveiragabriel.findaddress;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -28,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private AppCompatButton btn_search;
     private TextView text_cep;
     private ProgressBar progressBar2;
+    private Toolbar toolbar;
 
 
     @Override
@@ -35,11 +40,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        toolbar = findViewById(R.id.include);
         cep_edit_text = findViewById(R.id.cep_edit_text);
         btn_search = findViewById(R.id.btn_search);
         text_cep = findViewById(R.id.text_cep);
         progressBar2 = findViewById(R.id.progressBar2);
         progressBar2.setVisibility(View.GONE);
+        setSupportActionBar(toolbar);
+
+
 
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             progressBar2.setVisibility(View.VISIBLE);
+            text_cep.setText("");
 
         }
 
@@ -138,4 +148,27 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+        return true;
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+
+            case R.id.about:
+                startActivity(new Intent(MainActivity.this, ContactActivity.class));
+                break;
+            case R.id.exit:
+                this.finish();
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
 }
